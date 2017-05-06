@@ -39,7 +39,7 @@ displayOutput = function(completedGame) {
 
 module.exports.displayOutput = displayOutput;
 
-// ----------------------------------------------------------------------------------- // 
+// ---------------------------------------------------------------------------------- // 
 
 getBuiltLandmarkCount = function(player) {
     var count = 0;
