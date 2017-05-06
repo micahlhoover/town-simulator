@@ -1,0 +1,142 @@
+<html>
+    <head>
+        <link href="https://fonts.googleapis.com/css?family=Gloria+Hallelujah" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="static/style.css">
+        <link rel="stylesheet" href="static/font-awesome-4.7.0/css/font-awesome.min.css">
+    </head>
+    <body style="font-family: 'Gloria Hallelujah', cursive;">
+        <div>
+            <div style="text-align:center;background-color:#99bbff">Micah's  
+                <p style="font-size:80px;margin:5px;line-height:90px;">
+                    <i class="fa fa-building" aria-hidden="true"></i>
+                    &nbsp;MACHI KORO&nbsp;
+                    <i class="fa fa-building" aria-hidden="true"></i>
+                </p>
+                Simulator
+            </div>
+            <div style="width:900px;margin: 0 auto;">
+                <div ng-app="myApp" ng-controller="myCtrl">
+                    <div style="font-size:50px;float:left;">
+                        <i class="fa fa-users" aria-hidden="true"></i>
+                        &nbsp;&nbsp;Player count:
+                    </div>
+                    <div style="float:left;font-size:50px;"; ng-repeat="playerCount in playerCountOptions">
+                        <input type="radio" style="transform: scale(2);margin-left: 60px;margin-top:0px;" name="playerCount" value="{{playerCount}}" ng-model="test" ng-change="setPlayerCount({{playerCount}})"
+                        ng-checked="players.length === playerCount"/> {{playerCount}}<br>
+                    </div>
+                    <br style="clear:both"/>
+                    <div ng-repeat="player in players" ng-class="(player.ID % 2 == 0) ? 'off-color' : 'on-color'">
+                        <div style="float:left;font-size:60px;margin-right:40px;margin-left:10px;">{{player.ID}}</div>
+                        <div style="font-size:50px;float:left;">Spending style: </div>
+                        <div style="float:left;font-size:30px;padding-top:20px;"; ng-repeat="playerStyle in spendingStyles">
+                            <input type="radio" style="transform: scale(2);margin-left: 60px;margin-top:0px;" name="playerStyle{{player.ID}}" value="{{playerStyle}}" ng-model="test" ng-change="setSpendingStyle({{player.ID}},'{{playerStyle}}')"
+                            ng-checked="player.spendingStyle === playerStyle"/> {{playerStyle}}
+                        </div>
+                        <br style="clear:both"/>
+                        <div style="font-size:50px;float:left;">Color style: </div>
+                        <div style="float:left;font-size:30px;padding-top:20px;"; ng-repeat="colorStyle in colorStyles">
+                            <input type="radio" style="transform: scale(2);margin-left: 60px;margin-top:0px;" name="colorStyle{{player.ID}}" value="{{colorStyle}}" ng-model="test" ng-change="setColorStyle({{player.ID}},'{{colorStyle}}')"
+                            ng-checked="player.colorStyle === colorStyle"/> {{colorStyle}}
+                        </div>
+                        <div style="font-size:50px;float:right;padding-right:30px;">
+                            <i class="fa fa-male" aria-hidden="true"></i>
+                        </div>
+                        <br style="clear:both"/>
+
+                    </div>
+                    <div style="font-size:60px;width:100%;background-color:#99bbff;text-align: center;margin-top:20px;" ng-click="runSimulator()">Run Simulator !</div>
+                    <div style="padding-bottom:400px;padding-top:20px;">
+                        <div style="float:left;font-size:50px;">Results</div>
+                        <br style="clear:both"/>
+                        <div ng-repeat="result in results" style="font-size:35px;padding-left:30px;padding-top:10px;">
+                            <div style="float:left;">
+                                <div style="float:left;margin-right:10px;margin-top:20px;"><i class="fa fa-trophy" aria-hidden="true"></i></div>
+                                <div ng-if="result.winner.spendingStyle === 'Thrifty'" style="float:left;">Thrifty</div>
+                                <div ng-if="result.winner.spendingStyle === 'Aggressive'" style="float:left;">Aggressive</div>
+                            </div>
+                            <div style="float:left;margin-left:120px;">
+                                <div style="float:left;margin-right:10px;margin-top:20px;"><i class="fa fa-frown-o" aria-hidden="true"></i></div>
+                                <div style="float:left;background-color:blue;margin-right:15px;padding-left:20px;padding-right:20px;">{{result.loserColorBlueCount}}</div>
+                                <div style="float:left;background-color:green;margin-right:15px;padding-left:20px;padding-right:20px;">{{result.loserColorGreenCount}}</div>
+                                <div style="float:left;background-color:red;margin-right:15px;padding-left:20px;padding-right:20px;">{{result.loserColorRedCount}}</div>
+                            </div>
+                            <br style="clear:both"/>
+                            <!--<div ng-repeat="person in result.players">
+                                {{person.name}}: {{person.money}}
+                            </div>-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+
+</html>
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+<script>
+    var app = angular.module('myApp', []);
+    app.controller('myCtrl', function($scope, $http, $httpParamSerializer) {
+        $scope.playerCountOptions = [2,3,4];
+        $scope.spendingStyles = ["Aggressive", "Thrifty"];
+        $scope.colorStyles = ["Blue", "Green", "Red", "Spread"];
+        $scope.players = [
+            {ID: 1, colorStyle:"Green", spendingStyle:"Aggressive"},
+            {ID: 2, colorStyle:"Green", spendingStyle:"Aggressive"}
+        ];
+        $scope.results = [];
+
+        //$scope.selectedPlayerCount = 4;
+        $scope.selectedSpendingStyle = "Aggressive";
+        $scope.selectedColorStype = "Spread";
+
+        $scope.setPlayerCount = function(number) {
+            //$scope.selectedPlayerCount = number;
+            while ($scope.players.length > number) {
+                $scope.players.splice($scope.players.length-1,1);
+            }
+            while ($scope.players.length < number) {
+                $scope.players.push({ID: ($scope.players.length + 1), colorStyle:"green", spendingStyle:"Aggressive"});
+                //angular.extend($scope.players, $scope.players);
+            }
+            // going to 2 then 4 then 2 then 4 causes the last 4 to not do anything
+            // var newArray = [];
+            // for( var i = 0; i < $scope.players.length; i++) {
+            //     newArray.push( $scope.players[i]);
+            // }
+            // $scope.players = newArray;
+            //alert('here');
+            $scope.$apply();
+        }
+
+        $scope.setSpendingStyle = function(ID, style) {
+            for(var p = 0; p < $scope.players.length; p++) {
+                if ($scope.players[p].ID === ID) {
+                    $scope.players[p].spendingStyle = style;
+                }
+            }
+        }
+
+        $scope.setColorStyle = function(ID,color) {
+            for(var p = 0; p < $scope.players.length; p++) {
+                if ($scope.players[p].ID === ID) {
+                    $scope.players[p].colorStyle = color;
+                }
+            }
+        }
+
+        $scope.runSimulator = function() {
+            var baseUrl = "http://127.0.0.1:8081/api/runGameForFinalResults";
+
+            $http({
+                method: 'POST',
+                url: baseUrl,
+                data: {"players":$scope.players}
+                }
+            ).then( function(response) {
+                //alert("here is the response: " + response);  
+                $scope.results.push(response.data); 
+            });
+        }  
+    });
+</script>
