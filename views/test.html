@@ -7,9 +7,9 @@
     <body style="font-family: 'Gloria Hallelujah', cursive;">
         <div>
             <div style="text-align:center;background-color:#99bbff">Micah's  
-                <p style="font-size:80px;margin:5px;line-height:90px;">
+                <p style="font-size:60px;margin:5px;line-height:90px;">
                     <i class="fa fa-building" aria-hidden="true"></i>
-                    &nbsp;MACHI KORO&nbsp;
+                    &nbsp;Town Game Simulator&nbsp;
                     <i class="fa fa-building" aria-hidden="true"></i>
                 </p>
                 Simulator
@@ -50,9 +50,16 @@
                         <br style="clear:both"/>
                         <div ng-repeat="result in results" style="font-size:35px;padding-left:30px;padding-top:10px;">
                             <div style="float:left;">
-                                <div style="float:left;margin-right:10px;margin-top:20px;"><i class="fa fa-trophy" aria-hidden="true"></i></div>
-                                <div ng-if="result.winner.spendingStyle === 'Thrifty'" style="float:left;">Thrifty</div>
-                                <div ng-if="result.winner.spendingStyle === 'Aggressive'" style="float:left;">Aggressive</div>
+
+                                <!--<div style="float:left;margin-right:10px;margin-top:20px;"><i class="fa fa-trophy" aria-hidden="true"></i></div>-->
+
+                                <div ng-if="result.winner.colorStyle === 'Green'" style="float:left;width:30px;margin-right:10px;margin-top:13px;background-color:green;padding:5px;"><i class="fa fa-trophy" aria-hidden="true"></i></div>
+                                <div ng-if="result.winner.colorStyle === 'Red'" style="float:left;width:30px;margin-right:10px;margin-top:13px;background-color:red;padding:5px;"><i class="fa fa-trophy" aria-hidden="true"></i></div>
+                                <div ng-if="result.winner.colorStyle === 'Blue'" style="float:left;width:30px;margin-right:10px;margin-top:13px;background-color:blue;padding:5px;"><i class="fa fa-trophy" aria-hidden="true"></i></div>
+
+                                <div ng-if="result.winner.spendingStyle === 'Thrifty'" style="float:left;width:220px;padding-left:10px;">Thrifty</div>
+                                <div ng-if="result.winner.spendingStyle === 'Aggressive'" style="float:left;width:220px;padding-left:10px;">Aggressive</div>
+
                             </div>
                             <div style="float:left;margin-left:120px;">
                                 <div style="float:left;margin-right:10px;margin-top:20px;"><i class="fa fa-frown-o" aria-hidden="true"></i></div>
@@ -79,7 +86,8 @@
     app.controller('myCtrl', function($scope, $http, $httpParamSerializer) {
         $scope.playerCountOptions = [2,3,4];
         $scope.spendingStyles = ["Aggressive", "Thrifty"];
-        $scope.colorStyles = ["Blue", "Green", "Red", "Spread"];
+        //$scope.colorStyles = ["Blue", "Green", "Red", "Spread"];
+        $scope.colorStyles = ["Blue", "Green", "Red"];
         $scope.players = [
             {ID: 1, colorStyle:"Green", spendingStyle:"Aggressive"},
             {ID: 2, colorStyle:"Green", spendingStyle:"Aggressive"}
@@ -88,7 +96,7 @@
 
         //$scope.selectedPlayerCount = 4;
         $scope.selectedSpendingStyle = "Aggressive";
-        $scope.selectedColorStype = "Spread";
+        //$scope.selectedColorStyle = "Blue";
 
         $scope.setPlayerCount = function(number) {
             //$scope.selectedPlayerCount = number;
