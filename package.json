@@ -10,7 +10,8 @@
   },
   "devDependencies": {},
   "scripts": {
-    "test": "node launch.js"
+    "test": "node launch.js",
+    "start": "node launch.js"
   },
   "repository": {
     "type": "git",
