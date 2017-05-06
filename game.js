@@ -536,7 +536,7 @@ createDesiredCardList = function(gameObj, playerWhoRolls) {
             temp.ID = gameObj.establishments[i].ID;
             temp.cost = gameObj.establishments[i].Cost;
             temp.color = (gameObj.establishments[i].Color === playerWhoRolls.colorStyle) ? 7 : 2;
-            temp.Color = gameObj.establishments[i].Color[0];
+            //temp.Color = gameObj.establishments[i].Color[0];
             tempList.push(temp);
         }
         tempList.sort(function(a,b){
