@@ -87,7 +87,7 @@ app.post('/api/runGameForFinalResults', function (req, res) {
 });
 
 
-var server = app.listen(8081, function () {
+var server = app.listen(process.env.PORT || 8081, function () {
 
   var host = "127.0.0.1"  //server.address().address
   var port = server.address().port
