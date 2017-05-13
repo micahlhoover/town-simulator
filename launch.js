@@ -70,19 +70,13 @@ app.post('/api/runGameWithSomeResults', function (req, res) {
 
 app.post('/api/runGameForFinalResults', function (req, res) {
     var players = req.body.players;
-    console.log("player count: " + players.length);
     var playerCount = players.length;
     
-   console.log("Loading ...");
    var completedGame = gameContainer.runGame(playerCount, players);
-   console.log("Game complete.&.&.&. . . ");
+   console.log("Game complete");
 
-   //var tf = transformsHelper.Transforms();
-   //var tf2 = transformsHelper.Transforms;
    var formatter = transformsHelper.Transforms.prototype.formatResultDetails(completedGame, null, "\t");
-   //var funktion = t3.formatResultDetails(completedGame, null, "\t");
-   //res.end( JSON.stringify(transformsHelper.Transforms.formatResultDetails(completedGame, null, "\t")));
-   //res.end( JSON.stringify(formatter(completedGame, null, "\t")));
+
    res.end( JSON.stringify(formatter));
 });
 
